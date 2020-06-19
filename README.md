@@ -1,6 +1,6 @@
 # Todo App
 
-Created by Connor Giles as a coding challenge for NorthOne
+Created by Connor Giles as a coding challenge
 
 ## Features
 
