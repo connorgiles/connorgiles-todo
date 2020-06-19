@@ -42,8 +42,7 @@ function App() {
   const [todoToEdit, setTodoToEdit] = useState();
   const [filters, setFilters] = useState({});
 
-  const todos = filterTodos(parseTodos(rawTodos), filters);
-
+  const todos = parseTodos(rawTodos);
   const tags = distinctTags(todos);
 
   // Functions to remove and edit todos
@@ -66,12 +65,13 @@ function App() {
       setTodoToEdit(todoToAdd);
     }
   };
+
   return (
     <Wrapper>
       <h1 className="text-center my-4">Todos</h1>
       <TodoFilters filters={filters} setFilters={setFilters} tags={tags} />
       <TodoList
-        todos={todos}
+        todos={filterTodos(todos, filters)}
         createTodo={onSave}
         removeTodo={onRemove}
         editTodo={onStartEdit}

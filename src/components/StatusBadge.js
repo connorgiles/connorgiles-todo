@@ -7,8 +7,8 @@ const MyBadge = styled(Badge)`
 `;
 
 const colors = {
-  Pending: 'secondary',
-  'In Progress': 'info',
+  Pending: 'info',
+  'In Progress': 'primary',
   Completed: 'success',
 };
 
