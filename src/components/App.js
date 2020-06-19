@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import useLocalStorage from '../hooks/useLocalStorage';
 
+import TodoFilters from './TodoFilters';
 import TodoEdit from './TodoEdit';
 import TodoList from './TodoList';
 
@@ -28,11 +29,19 @@ const parseTodos = (todos) =>
     dueDate: todo.dueDate ? new Date(todo.dueDate) : undefined,
   }));
 
+const filterTodos = (todos, filters = {}) =>
+  todos.filter((todo) => {
+    if (filters.status && filters.status !== todo.status) return false;
+    return true;
+  });
+
 function App() {
   const [rawTodos, setTodos] = useLocalStorage('cg-todos', []);
   const [todoToEdit, setTodoToEdit] = useState();
+  const [filters, setFilters] = useState({});
 
-  const todos = parseTodos(rawTodos);
+  const todos = filterTodos(parseTodos(rawTodos), filters);
+
   const tags = distinctTags(todos);
 
   // Functions to remove and edit todos
@@ -58,6 +67,7 @@ function App() {
   return (
     <Wrapper>
       <h1 className="text-center my-4">Todos</h1>
+      <TodoFilters filters={filters} setFilters={setFilters} />
       <TodoList
         todos={todos}
         createTodo={onSave}

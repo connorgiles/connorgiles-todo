@@ -18,3 +18,4 @@ Created by Connor Giles as a coding challenge for NorthOne
 - Sub tasks
 - Chrome with TimestampTrigger notifications
 - Calendar view
+- Allow tasks to have a due-time
