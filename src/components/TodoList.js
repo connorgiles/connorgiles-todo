@@ -1,25 +1,14 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, Badge, Button } from 'reactstrap';
-import styled from 'styled-components';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 
+import TodoListItem from './TodoListItem';
 import TodoForm from './TodoForm';
 
-const ClickableListItem = styled(ListGroupItem)`
-  cursor: pointer;
-`;
-
-const StatusBadge = ({ status }) => {
-  switch (status) {
-    case 'Pending':
-      return <Badge color="secondary">{status}</Badge>;
-    case 'In Progress':
-      return <Badge color="info">{status}</Badge>;
-    case 'Completed':
-      return <Badge color="success">{status}</Badge>;
-    default:
-      return <></>;
-  }
-};
+const BlankState = () => (
+  <ListGroupItem className="text-muted py-3">
+    Create your first todo below!
+  </ListGroupItem>
+);
 
 export default function TodoList({
   saveTodo,
@@ -29,30 +18,21 @@ export default function TodoList({
 }) {
   const TodoListContent = () =>
     !todos || todos.length === 0 ? (
-      <ListGroupItem className="text-muted py-3">
-        Create your first todo below!
-      </ListGroupItem>
+      <BlankState />
     ) : (
       todos.map((todo, index) => (
-        <ClickableListItem key={todo.id} onClick={() => editTodo(index)}>
-          {todo.title} <StatusBadge status={todo.status} />
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              removeTodo(index);
-            }}
-            close
-          />
-        </ClickableListItem>
+        <TodoListItem
+          todo={todo}
+          onEdit={() => editTodo(index)}
+          onRemove={() => removeTodo(index)}
+        />
       ))
     );
 
   return (
     <ListGroup>
       <TodoListContent />
-      <ListGroupItem>
-        <TodoForm saveTodo={saveTodo} />
-      </ListGroupItem>
+      <TodoForm saveTodo={saveTodo} />
     </ListGroup>
   );
 }

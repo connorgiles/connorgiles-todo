@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { Button, InputGroup, InputGroupAddon, Input, Form } from 'reactstrap';
+import {
+  Button,
+  InputGroup,
+  InputGroupAddon,
+  Input,
+  Form,
+  ListGroupItem,
+} from 'reactstrap';
+import styled from 'styled-components';
+
+const FormWrapper = styled(ListGroupItem)`
+  padding: 0.5rem;
+`;
 
 export default function TodoForm({ saveTodo }) {
   const [title, setTitle] = useState('');
@@ -15,21 +27,23 @@ export default function TodoForm({ saveTodo }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputGroup>
-        <Input
-          id="form-title"
-          name="title"
-          className="border-0"
-          onChange={handleInputChange}
-          value={title}
-          placeholder="New task"
-          required
-        />
-        <InputGroupAddon addonType="append">
-          <Button color="link">+ Add Task</Button>
-        </InputGroupAddon>
-      </InputGroup>
-    </Form>
+    <FormWrapper>
+      <Form onSubmit={handleSubmit}>
+        <InputGroup>
+          <Input
+            id="form-title"
+            name="title"
+            className="border-0"
+            onChange={handleInputChange}
+            value={title}
+            placeholder="New task"
+            required
+          />
+          <InputGroupAddon addonType="append">
+            <Button color="link">+ Add Task</Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </Form>
+    </FormWrapper>
   );
 }
