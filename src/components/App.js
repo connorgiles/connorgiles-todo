@@ -55,7 +55,6 @@ function App() {
       setTodoToEdit(todoToAdd);
     }
   };
-
   return (
     <Wrapper>
       <h1 className="text-center my-4">Todos</h1>
