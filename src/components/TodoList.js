@@ -22,6 +22,7 @@ export default function TodoList({
     ) : (
       todos.map((todo, index) => (
         <TodoListItem
+          key={todo.id}
           todo={todo}
           onEdit={() => editTodo(index)}
           onRemove={() => removeTodo(index)}

@@ -12,31 +12,41 @@ const Wrapper = styled(Container)`
   max-width: 600px;
 `;
 
+const distinctTags = (todos) => {
+  const tags = new Set();
+  todos.forEach((t) => {
+    if (t && t.tags) {
+      t.tags.forEach((tag) => tags.add(tag.value));
+    }
+  });
+  return [...tags.values()].map((value) => ({ value, label: value }));
+};
+
 function App() {
   const [todos, setTodos] = useLocalStorage('cg-todos', []);
-  const [categories, setCategories] = useLocalStorage('cg-categories', []);
-
   const [todoToEdit, setTodoToEdit] = useState();
 
-  const onSave = (newTodo) => {
+  const tags = distinctTags(todos);
+
+  // Functions to remove and edit todos
+  const onRemove = (indexToRemove) =>
+    setTodos(todos.filter((_, index) => index !== indexToRemove));
+  const onStartEdit = (indexToEdit) => setTodoToEdit(todos[indexToEdit]);
+
+  // Save new todo
+  const onSave = (newTodo, { dismiss = true } = {}) => {
     if (newTodo && newTodo.id) {
       // Update existing value
       setTodos(todos.map((todo) => (todo.id === newTodo.id ? newTodo : todo)));
-      setTodoToEdit(undefined);
+      if (dismiss) {
+        setTodoToEdit(undefined);
+      }
     } else {
       // Add to the end of the array
       const todoToAdd = { id: uuidv4(), ...newTodo };
       setTodos([...todos, todoToAdd]);
       setTodoToEdit(todoToAdd);
     }
-  };
-
-  const onRemove = (indexToRemove) => {
-    setTodos(todos.filter((_, index) => index !== indexToRemove));
-  };
-
-  const onStartEdit = (indexToEdit) => {
-    setTodoToEdit(todos[indexToEdit]);
   };
 
   return (
@@ -52,6 +62,7 @@ function App() {
         saveTodo={onSave}
         todo={todoToEdit}
         toggle={() => setTodoToEdit(undefined)}
+        tags={tags}
       />
     </Wrapper>
   );

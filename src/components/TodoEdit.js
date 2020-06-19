@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Button,
   Modal,
@@ -12,6 +12,12 @@ import {
   Col,
 } from 'reactstrap';
 import DatePicker from 'react-datepicker';
+import CreatableSelect from 'react-select/creatable';
+import throttle from 'lodash.throttle';
+
+import useLocalStorage from '../hooks/useLocalStorage';
+
+import { statuses } from '../constants';
 
 const MyLabel = ({ required = false, children, ...rest }) => (
   <Label {...rest}>
@@ -20,7 +26,8 @@ const MyLabel = ({ required = false, children, ...rest }) => (
   </Label>
 );
 
-export default function TodoEdit({ saveTodo, todo, toggle }) {
+export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
+  const [autosave, setAutosave] = useLocalStorage('cg-autosave', false);
   const [state, setState] = useState();
   const [ready, setReady] = useState(false);
 
@@ -49,16 +56,24 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
   const onSubmit = (e) => {
     e.preventDefault();
     saveTodo(state);
-    setState({});
   };
 
+  const throttledSave = throttle(
+    (newState) => saveTodo(newState, { dismiss: false }),
+    200
+  );
+
   // Helper function to update state
-  const updateTodo = (field, value) =>
-    setState({
+  const updateTodo = (field, value) => {
+    const newState = {
       ...state,
       [field]: value,
-    });
-
+    };
+    setState(newState);
+    if (autosave) {
+      throttledSave(newState);
+    }
+  };
   // Helper function to update state from input
   const handleInputChange = (e) => updateTodo(e.target.name, e.target.value);
 
@@ -105,9 +120,9 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
                     name="status"
                     onChange={handleInputChange}
                     value={state?.status}>
-                    <option>Pending</option>
-                    <option>In Progress</option>
-                    <option>Completed</option>
+                    {statuses.map((s) => (
+                      <option key={s}>{s}</option>
+                    ))}
                   </Input>
                 </FormGroup>
               </Col>
@@ -125,7 +140,33 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
                 </FormGroup>
               </Col>
             </Row>
-            <Button color="primary">Save</Button>
+            <FormGroup>
+              <MyLabel for="form-tags" className="d-block">
+                Tags
+              </MyLabel>
+              <CreatableSelect
+                id="form-tags"
+                isMulti
+                onChange={(options) => updateTodo('tags', options)}
+                value={state?.tags}
+                options={tags}
+              />
+            </FormGroup>
+            <Row>
+              <Col>{!autosave && <Button color="primary">Save</Button>}</Col>
+              <Col>
+                <FormGroup check className="my-1 text-right">
+                  <Label check>
+                    <Input
+                      type="checkbox"
+                      checked={autosave}
+                      onChange={(e) => setAutosave(e.target.checked)}
+                    />{' '}
+                    Autosave changes?
+                  </Label>
+                </FormGroup>
+              </Col>
+            </Row>
           </Form>
         </ModalBody>
       </Modal>
