@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListGroupItem, Badge, Button } from 'reactstrap';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const ClickableListItem = styled(ListGroupItem)`
   cursor: pointer;
@@ -22,7 +23,8 @@ const StatusBadge = ({ status }) => {
 export default function TodoListItem({ todo, onRemove, onEdit }) {
   return (
     <ClickableListItem key={todo.id} onClick={onEdit}>
-      {todo.title} <StatusBadge status={todo.status} />
+      {todo.title} <StatusBadge status={todo.status} />{' '}
+      {todo.dueDate && `due ${moment(todo.dueDate).fromNow()}`}
       <Button
         onClick={(e) => {
           e.stopPropagation();
