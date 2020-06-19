@@ -24,7 +24,7 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
   const [state, setState] = useState();
   const [ready, setReady] = useState(false);
 
-  const firstInput = useRef();
+  const titleInput = useRef();
 
   useEffect(() => {
     // Set state from todo param
@@ -39,8 +39,8 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
 
   useEffect(() => {
     // Focus on first input
-    if (!ready && firstInput.current) {
-      firstInput.current.focus();
+    if (!ready && titleInput.current) {
+      titleInput.current.focus();
       setReady(true);
     }
   }, [ready, state]);
@@ -78,7 +78,7 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
                 autoFocus
                 onChange={handleInputChange}
                 value={state?.title}
-                innerRef={firstInput}
+                innerRef={titleInput}
                 required
               />
             </FormGroup>

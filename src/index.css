@@ -15,3 +15,11 @@ code {
 .react-datepicker-wrapper {
   display: block;
 }
+
+.no-border,
+.no-border:active,
+.no-border:focus {
+  outline: none;
+  border: 0;
+  box-shadow: none;
+}

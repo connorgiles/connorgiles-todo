@@ -13,7 +13,9 @@ const Wrapper = styled(Container)`
 `;
 
 function App() {
-  const [todos, setTodos] = useLocalStorage('todos', []);
+  const [todos, setTodos] = useLocalStorage('cg-todos', []);
+  const [categories, setCategories] = useLocalStorage('cg-categories', []);
+
   const [todoToEdit, setTodoToEdit] = useState();
 
   const onSave = (newTodo) => {
@@ -42,9 +44,9 @@ function App() {
       <h1 className="text-center my-4">Todos</h1>
       <TodoList
         todos={todos}
+        createTodo={onSave}
         removeTodo={onRemove}
         editTodo={onStartEdit}
-        saveTodo={onSave}
       />
       <TodoEdit
         saveTodo={onSave}

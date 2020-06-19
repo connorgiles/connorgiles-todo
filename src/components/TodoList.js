@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 
 import TodoListItem from './TodoListItem';
-import TodoForm from './TodoForm';
+import TodoCreate from './TodoCreate';
 
 const BlankState = () => (
   <ListGroupItem className="text-muted py-3">
@@ -11,7 +11,7 @@ const BlankState = () => (
 );
 
 export default function TodoList({
-  saveTodo,
+  createTodo,
   todos = [],
   removeTodo,
   editTodo,
@@ -32,7 +32,7 @@ export default function TodoList({
   return (
     <ListGroup>
       <TodoListContent />
-      <TodoForm saveTodo={saveTodo} />
+      <TodoCreate createTodo={createTodo} />
     </ListGroup>
   );
 }

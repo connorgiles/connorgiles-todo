@@ -13,12 +13,12 @@ const FormWrapper = styled(ListGroupItem)`
   padding: 0.5rem;
 `;
 
-export default function TodoForm({ saveTodo }) {
+export default function TodoCreate({ createTodo }) {
   const [title, setTitle] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    saveTodo({ title, status: 'Pending' });
+    createTodo({ title, status: 'Pending' });
     setTitle('');
   };
 
@@ -33,7 +33,7 @@ export default function TodoForm({ saveTodo }) {
           <Input
             id="form-title"
             name="title"
-            className="border-0"
+            className="no-border"
             onChange={handleInputChange}
             value={title}
             placeholder="New task"
