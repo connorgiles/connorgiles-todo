@@ -22,10 +22,17 @@ const distinctTags = (todos) => {
   return [...tags.values()].map((value) => ({ value, label: value }));
 };
 
+const parseTodos = (todos) =>
+  todos.map((todo) => ({
+    ...todo,
+    dueDate: todo.dueDate ? new Date(todo.dueDate) : undefined,
+  }));
+
 function App() {
-  const [todos, setTodos] = useLocalStorage('cg-todos', []);
+  const [rawTodos, setTodos] = useLocalStorage('cg-todos', []);
   const [todoToEdit, setTodoToEdit] = useState();
 
+  const todos = parseTodos(rawTodos);
   const tags = distinctTags(todos);
 
   // Functions to remove and edit todos

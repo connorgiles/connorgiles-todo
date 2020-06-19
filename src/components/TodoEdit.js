@@ -27,21 +27,24 @@ const MyLabel = ({ required = false, children, ...rest }) => (
 );
 
 export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
-  const [autosave, setAutosave] = useLocalStorage('cg-autosave', false);
+  const [autosave, setAutosave] = useLocalStorage('cg-autosave', true);
   const [state, setState] = useState();
   const [ready, setReady] = useState(false);
 
   const titleInput = useRef();
 
+  const autosaveDelay = 500; // Only allow saves every N ms
+  const throttledSave = throttle(
+    (newState) => saveTodo(newState, { dismiss: false }),
+    autosaveDelay
+  );
+
   useEffect(() => {
     // Set state from todo param
     if (todo) {
-      setState({
-        ...todo,
-        dueDate: todo.dueDate ? new Date(todo.dueDate) : undefined,
-      });
+      setState(todo);
+      setReady(false);
     }
-    setReady(false);
   }, [todo]);
 
   useEffect(() => {
@@ -57,11 +60,6 @@ export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
     e.preventDefault();
     saveTodo(state);
   };
-
-  const throttledSave = throttle(
-    (newState) => saveTodo(newState, { dismiss: false }),
-    200
-  );
 
   // Helper function to update state
   const updateTodo = (field, value) => {
@@ -155,7 +153,7 @@ export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
             <Row>
               <Col>{!autosave && <Button color="primary">Save</Button>}</Col>
               <Col>
-                <FormGroup check className="my-1 text-right">
+                <FormGroup check className="my-2 text-right">
                   <Label check>
                     <Input
                       type="checkbox"
