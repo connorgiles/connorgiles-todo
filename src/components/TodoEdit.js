@@ -29,7 +29,7 @@ const MyLabel = ({ required = false, children, ...rest }) => (
 export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
   const [autosave, setAutosave] = useLocalStorage('cg-autosave', true);
   const [state, setState] = useState();
-  const [ready, setReady] = useState(false);
+  const [recordLoaded, setRecordLoaded] = useState(false);
 
   const titleInput = useRef();
 
@@ -43,17 +43,17 @@ export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
     // Set state from todo param
     if (todo) {
       setState(todo);
-      setReady(false);
+      setRecordLoaded(false);
     }
   }, [todo]);
 
   useEffect(() => {
-    // Focus on first input
-    if (!ready && titleInput.current) {
+    // Focus on first input the first time state changes
+    if (!recordLoaded && titleInput.current) {
       titleInput.current.focus();
-      setReady(true);
+      setRecordLoaded(true);
     }
-  }, [ready, state]);
+  }, [recordLoaded, state]);
 
   // Helper function to save changes
   const onSubmit = (e) => {
