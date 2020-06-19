@@ -9,6 +9,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
+import DatePicker from 'react-datepicker';
 
 export default function TodoEdit({ saveTodo, todo, toggle }) {
   const [state, setState] = useState();
@@ -18,7 +19,12 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
 
   useEffect(() => {
     // Set state from todo param
-    setState({ ...todo });
+    if (todo) {
+      setState({
+        ...todo,
+        dueDate: todo.dueDate ? new Date(todo.dueDate) : undefined,
+      });
+    }
     setReady(false);
   }, [todo]);
 
@@ -30,18 +36,22 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
     }
   }, [ready, state]);
 
+  // Helper function to save changes
   const onSubmit = (e) => {
     e.preventDefault();
     saveTodo(state);
     setState({});
   };
 
-  const handleInputChange = (e) => {
+  // Helper function to update state
+  const updateTodo = (field, value) =>
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      [field]: value,
     });
-  };
+
+  // Helper function to update state from input
+  const handleInputChange = (e) => updateTodo(e.target.name, e.target.value);
 
   return (
     <div>
@@ -83,6 +93,17 @@ export default function TodoEdit({ saveTodo, todo, toggle }) {
                 <option>In Progress</option>
                 <option>Completed</option>
               </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="form-date" className="d-block">
+                Due Date
+              </Label>
+              <DatePicker
+                selected={state?.dueDate}
+                onChange={(date) => updateTodo('dueDate', date)}
+                minDate={new Date()}
+                className="form-control"
+              />
             </FormGroup>
             <Button color="primary">Save</Button>
           </Form>

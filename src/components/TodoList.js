@@ -27,11 +27,6 @@ export default function TodoList({
   removeTodo,
   editTodo,
 }) {
-  const onRemove = (e, index) => {
-    e.stopPropagation();
-    removeTodo(index);
-  };
-
   const TodoListContent = () =>
     !todos || todos.length === 0 ? (
       <ListGroupItem className="text-muted py-3">
@@ -41,7 +36,13 @@ export default function TodoList({
       todos.map((todo, index) => (
         <ClickableListItem key={todo.id} onClick={() => editTodo(index)}>
           {todo.title} <StatusBadge status={todo.status} />
-          <Button onClick={(e) => onRemove(e, index)} close />
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              removeTodo(index);
+            }}
+            close
+          />
         </ClickableListItem>
       ))
     );
