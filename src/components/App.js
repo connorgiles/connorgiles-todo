@@ -32,6 +32,8 @@ const parseTodos = (todos) =>
 const filterTodos = (todos, filters = {}) =>
   todos.filter((todo) => {
     if (filters.status && filters.status !== todo.status) return false;
+    if (filters.tag && !(todo.tags || []).find((t) => t.value === filters.tag))
+      return false;
     return true;
   });
 
@@ -67,7 +69,7 @@ function App() {
   return (
     <Wrapper>
       <h1 className="text-center my-4">Todos</h1>
-      <TodoFilters filters={filters} setFilters={setFilters} />
+      <TodoFilters filters={filters} setFilters={setFilters} tags={tags} />
       <TodoList
         todos={todos}
         createTodo={onSave}
