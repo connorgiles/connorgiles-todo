@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroupItem, Badge, Button } from 'reactstrap';
+import { ListGroupItem, Button } from 'reactstrap';
 import styled from 'styled-components';
 import moment from 'moment';
 
