@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Button,
   Modal,
@@ -76,98 +76,96 @@ export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
   const handleInputChange = (e) => updateTodo(e.target.name, e.target.value);
 
   return (
-    <div>
-      <Modal isOpen={!!todo} toggle={toggle}>
-        <ModalHeader toggle={toggle}>{state?.title || 'Edit Todo'}</ModalHeader>
-        <ModalBody>
-          <Form onSubmit={onSubmit}>
-            <FormGroup>
-              <MyLabel required for="form-title">
-                Title
-              </MyLabel>
-              <Input
-                id="form-title"
-                name="title"
-                autoFocus
-                onChange={handleInputChange}
-                value={state?.title}
-                innerRef={titleInput}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <MyLabel for="form-description">Description</MyLabel>
-              <Input
-                type="textarea"
-                name="description"
-                id="form-description"
-                onChange={handleInputChange}
-                value={state?.description}
-              />
-            </FormGroup>
-            <Row>
-              <Col>
-                <FormGroup>
-                  <MyLabel required for="form-status">
-                    Status
-                  </MyLabel>
+    <Modal isOpen={!!todo} toggle={toggle}>
+      <ModalHeader toggle={toggle}>{state?.title || 'Edit Todo'}</ModalHeader>
+      <ModalBody>
+        <Form onSubmit={onSubmit}>
+          <FormGroup>
+            <MyLabel required for="form-title">
+              Title
+            </MyLabel>
+            <Input
+              id="form-title"
+              name="title"
+              autoFocus
+              onChange={handleInputChange}
+              value={state?.title}
+              innerRef={titleInput}
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <MyLabel for="form-description">Description</MyLabel>
+            <Input
+              type="textarea"
+              name="description"
+              id="form-description"
+              onChange={handleInputChange}
+              value={state?.description}
+            />
+          </FormGroup>
+          <Row>
+            <Col>
+              <FormGroup>
+                <MyLabel required for="form-status">
+                  Status
+                </MyLabel>
+                <Input
+                  id="form-status"
+                  required
+                  type="select"
+                  name="status"
+                  onChange={handleInputChange}
+                  value={state?.status}>
+                  {statuses.map((s) => (
+                    <option key={s}>{s}</option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <MyLabel for="form-date" className="d-block">
+                  Due Date
+                </MyLabel>
+                <DatePicker
+                  selected={state?.dueDate}
+                  onChange={(date) => updateTodo('dueDate', date)}
+                  minDate={new Date()}
+                  className="form-control"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <FormGroup>
+            <MyLabel for="form-tags" className="d-block">
+              Tags
+            </MyLabel>
+            <CreatableSelect
+              id="form-tags"
+              isMulti
+              onChange={(options) => updateTodo('tags', options)}
+              value={state?.tags}
+              options={tags}
+            />
+          </FormGroup>
+          <Row>
+            <Col>{!autosave && <Button color="primary">Save</Button>}</Col>
+            <Col>
+              <FormGroup check className="my-2 text-right">
+                <Label check>
                   <Input
-                    id="form-status"
-                    required
-                    type="select"
-                    name="status"
-                    onChange={handleInputChange}
-                    value={state?.status}>
-                    {statuses.map((s) => (
-                      <option key={s}>{s}</option>
-                    ))}
-                  </Input>
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <MyLabel for="form-date" className="d-block">
-                    Due Date
-                  </MyLabel>
-                  <DatePicker
-                    selected={state?.dueDate}
-                    onChange={(date) => updateTodo('dueDate', date)}
-                    minDate={new Date()}
-                    className="form-control"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <FormGroup>
-              <MyLabel for="form-tags" className="d-block">
-                Tags
-              </MyLabel>
-              <CreatableSelect
-                id="form-tags"
-                isMulti
-                onChange={(options) => updateTodo('tags', options)}
-                value={state?.tags}
-                options={tags}
-              />
-            </FormGroup>
-            <Row>
-              <Col>{!autosave && <Button color="primary">Save</Button>}</Col>
-              <Col>
-                <FormGroup check className="my-2 text-right">
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      checked={autosave}
-                      onChange={(e) => setAutosave(e.target.checked)}
-                    />{' '}
-                    Autosave changes?
-                  </Label>
-                </FormGroup>
-              </Col>
-            </Row>
-          </Form>
-        </ModalBody>
-      </Modal>
-    </div>
+                    type="checkbox"
+                    checked={autosave}
+                    onChange={(e) => setAutosave(e.target.checked)}
+                  />{' '}
+                  Autosave changes?
+                </Label>
+              </FormGroup>
+            </Col>
+          </Row>
+        </Form>
+      </ModalBody>
+    </Modal>
   );
 }
