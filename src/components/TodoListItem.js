@@ -10,17 +10,15 @@ const ClickableListItem = styled(ListGroupItem)`
 `;
 
 export default function TodoListItem({ todo, onRemove, onEdit }) {
+  const removeTask = (e) => {
+    e.stopPropagation();
+    onRemove();
+  };
   return (
     <ClickableListItem key={todo.id} onClick={onEdit}>
       {todo.title} <Badge status={todo.status} />{' '}
       {todo.dueDate && `due ${moment(todo.dueDate).fromNow()}`}
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          onRemove();
-        }}
-        close
-      />
+      <Button onClick={removeTask} close />
     </ClickableListItem>
   );
 }

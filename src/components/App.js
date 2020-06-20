@@ -38,10 +38,12 @@ const filterTodos = (todos, filters = {}) =>
   });
 
 function App() {
+  // State values
   const [rawTodos, setTodos] = useLocalStorage('cg-todos', []);
   const [todoToEdit, setTodoToEdit] = useState();
   const [filters, setFilters] = useState({});
 
+  // Parse todos and tags from state
   const todos = parseTodos(rawTodos);
   const tags = distinctTags(todos);
 

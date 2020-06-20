@@ -18,12 +18,10 @@ export default function TodoCreate({ createTodo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTodo({ title, status: 'Pending' });
-    setTitle('');
-  };
-
-  const handleInputChange = (e) => {
-    setTitle(e.target.value);
+    if (title && title !== '') {
+      createTodo({ title, status: 'Pending' });
+      setTitle('');
+    }
   };
 
   return (
@@ -32,9 +30,10 @@ export default function TodoCreate({ createTodo }) {
         <InputGroup>
           <Input
             id="form-title"
+            data-testid="create-title"
             name="title"
             className="no-border"
-            onChange={handleInputChange}
+            onChange={(e) => setTitle(e.target.value)}
             value={title}
             placeholder="New task"
             required
