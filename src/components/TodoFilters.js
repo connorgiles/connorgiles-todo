@@ -2,7 +2,7 @@ import React from 'react';
 
 import { statuses } from '../constants';
 
-import StatusBadge from './StatusBadge';
+import Badge from './Badge';
 
 export default function TodoFilters({ filters, setFilters, tags }) {
   const filterStatus = (status) =>
@@ -24,14 +24,14 @@ export default function TodoFilters({ filters, setFilters, tags }) {
     <div>
       <div className="my-3">
         Status:{' '}
-        <StatusBadge
+        <Badge
           className="mr-2"
           color="light"
           status={'All'}
           onClick={() => filterStatus(undefined)}
         />
         {statuses.map((s) => (
-          <StatusBadge
+          <Badge
             className="mr-2"
             status={s}
             color={isSelected('status', s) ? undefined : 'light'}
@@ -41,14 +41,14 @@ export default function TodoFilters({ filters, setFilters, tags }) {
       </div>
       <div className="my-3">
         Tags:{' '}
-        <StatusBadge
+        <Badge
           className="mr-2"
           color="light"
           status={'All'}
           onClick={() => filterTags(undefined)}
         />
         {tags.map(({ value }) => (
-          <StatusBadge
+          <Badge
             className="mr-2"
             status={value}
             color={isSelected('tag', value) ? undefined : 'light'}

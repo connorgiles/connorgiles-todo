@@ -19,3 +19,8 @@ Created by Connor Giles as a coding challenge
 - Chrome with TimestampTrigger notifications
 - Calendar view
 - Allow tasks to have a due-time
+
+### Changes
+
+- [ ] Default status to status from filters
+- [ ] Test cases

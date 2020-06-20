@@ -3,7 +3,7 @@ import { ListGroupItem, Button } from 'reactstrap';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import StatusBadge from './StatusBadge';
+import Badge from './Badge';
 
 const ClickableListItem = styled(ListGroupItem)`
   cursor: pointer;
@@ -12,7 +12,7 @@ const ClickableListItem = styled(ListGroupItem)`
 export default function TodoListItem({ todo, onRemove, onEdit }) {
   return (
     <ClickableListItem key={todo.id} onClick={onEdit}>
-      {todo.title} <StatusBadge status={todo.status} />{' '}
+      {todo.title} <Badge status={todo.status} />{' '}
       {todo.dueDate && `due ${moment(todo.dueDate).fromNow()}`}
       <Button
         onClick={(e) => {
