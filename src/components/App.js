@@ -46,6 +46,12 @@ function App() {
       { dismiss: false }
     );
   };
+  const onReorder = (fromIndex, toIndex) => {
+    const data = [...todos];
+    const item = data.splice(fromIndex, 1)[0];
+    data.splice(toIndex, 0, item);
+    setTodos(data);
+  };
 
   // Save new todo
   const onSave = (newTodo, { dismiss = true } = {}) => {
@@ -69,6 +75,7 @@ function App() {
       <TodoSearch filters={filters} setFilters={setFilters} />
       <TodoList
         todos={filterTodos(todos, filters)}
+        reorderTodo={onReorder}
         createTodo={onSave}
         removeTodo={onRemove}
         editTodo={onStartEdit}

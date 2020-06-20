@@ -33,24 +33,28 @@ export const normalizeTodos = (todos) =>
  */
 export const filterTodos = (todos, filters = {}) => {
   const query = filters.query ? filters.query.toLowerCase() : null;
-  return todos.filter((todo) => {
+  return todos.map((todo) => {
     // Must include search query if present
     if (query && !todo.title.toLowerCase().includes(query)) {
-      return false;
+      return { ...todo, include: false };
     }
     // Must have the right status if filtering by status
-    if (filters.status && filters.status !== todo.status) {
-      return false;
+    if (
+      filters.status &&
+      filters.status !== todo.status &&
+      (filters.status !== 'Not Completed' || todo.status === 'Completed')
+    ) {
+      return { ...todo, include: false };
     }
     // Must include the right tag if filtering by tag
     if (
       filters.tag &&
       !(todo.tags || []).find((t) => t.value === filters.tag)
     ) {
-      return false;
+      return { ...todo, include: false };
     }
     // Otherwise include it
-    return true;
+    return { ...todo, include: true };
   });
 };
 

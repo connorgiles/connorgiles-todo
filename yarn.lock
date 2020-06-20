@@ -8888,6 +8888,13 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-drag-listview@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/react-drag-listview/-/react-drag-listview-0.1.6.tgz#2aa9e0446edfea618ca209814b72fd110e8ed290"
+  integrity sha512-0nSWkR1bMLKgLZIYY2YVURYapppzy46FNSs9uAcCxceo2lnajngzLQ3tBgWaTjKTlWMXD0MAcDUWFDYdqMPYUg==
+  dependencies:
+    prop-types "^15.5.8"
+
 react-error-overlay@^6.0.7:
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"

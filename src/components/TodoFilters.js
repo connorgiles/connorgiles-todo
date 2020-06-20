@@ -70,12 +70,19 @@ export default function TodoFilters({ filters, setFilters, tags }) {
           />
           {statuses.map((s) => (
             <Badge
+              key={s}
               className="mr-2"
               status={s}
               color={isSelected('status', s) ? undefined : 'light'}
               onClick={() => filterStatus(s)}
             />
           ))}
+          <Badge
+            className="mr-2"
+            status={'Not Completed'}
+            color={isSelected('status', 'Not Completed') ? 'info' : 'light'}
+            onClick={() => filterStatus('Not Completed')}
+          />
         </div>
         <div className="my-3 text-center">
           Tags:{' '}
@@ -87,6 +94,7 @@ export default function TodoFilters({ filters, setFilters, tags }) {
           />
           {tags.map(({ value }) => (
             <Badge
+              key={value}
               className="mr-2"
               status={value}
               color={filters.tag && isSelected('tag', value) ? 'dark' : 'light'}

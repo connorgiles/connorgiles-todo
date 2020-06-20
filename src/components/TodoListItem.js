@@ -51,7 +51,9 @@ export default memo(function TodoListItem({
     toggleStatus();
   };
   return (
-    <ClickableListItem onClick={onEdit}>
+    <ClickableListItem
+      onClick={onEdit}
+      className={`todo-item ${todo?.include ? 'd-block' : 'd-none'}`}>
       <TodoCheckmark
         status={todo.status}
         toggle={toggleTaskStatus}
