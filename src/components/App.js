@@ -5,6 +5,13 @@ import styled from 'styled-components';
 
 import useLocalStorage from '../hooks/useLocalStorage';
 
+import {
+  distinctTags,
+  normalizeTodos,
+  filterTodos,
+  nextStatus,
+} from '../helpers';
+
 import TodoFilters from './TodoFilters';
 import TodoEdit from './TodoEdit';
 import TodoList from './TodoList';
@@ -13,44 +20,30 @@ const Wrapper = styled(Container)`
   max-width: 600px;
 `;
 
-const distinctTags = (todos) => {
-  const tags = new Set();
-  todos.forEach((t) => {
-    if (t && t.tags) {
-      t.tags.forEach((tag) => tags.add(tag.value));
-    }
-  });
-  return [...tags.values()].map((value) => ({ value, label: value }));
-};
-
-const parseTodos = (todos) =>
-  todos.map((todo) => ({
-    ...todo,
-    dueDate: todo.dueDate ? new Date(todo.dueDate) : undefined,
-  }));
-
-const filterTodos = (todos, filters = {}) =>
-  todos.filter((todo) => {
-    if (filters.status && filters.status !== todo.status) return false;
-    if (filters.tag && !(todo.tags || []).find((t) => t.value === filters.tag))
-      return false;
-    return true;
-  });
-
 function App() {
   // State values
   const [rawTodos, setTodos] = useLocalStorage('cg-todos', []);
   const [todoToEdit, setTodoToEdit] = useState();
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useLocalStorage('cg-filtes', {});
 
   // Parse todos and tags from state
-  const todos = parseTodos(rawTodos);
+  const todos = normalizeTodos(rawTodos);
   const tags = distinctTags(todos);
 
   // Functions to remove and edit todos
   const onRemove = (indexToRemove) =>
     setTodos(todos.filter((_, index) => index !== indexToRemove));
   const onStartEdit = (indexToEdit) => setTodoToEdit(todos[indexToEdit]);
+  const onToggleStatus = (indexToToggle) => {
+    const currentTodo = todos[indexToToggle];
+    onSave(
+      {
+        ...currentTodo,
+        status: nextStatus(currentTodo.status),
+      },
+      { dismiss: false }
+    );
+  };
 
   // Save new todo
   const onSave = (newTodo, { dismiss = true } = {}) => {
@@ -77,6 +70,7 @@ function App() {
         createTodo={onSave}
         removeTodo={onRemove}
         editTodo={onStartEdit}
+        toggleStatus={onToggleStatus}
       />
       <TodoEdit
         saveTodo={onSave}

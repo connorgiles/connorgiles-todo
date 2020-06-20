@@ -1,10 +1,17 @@
 import React from 'react';
+import { Input } from 'reactstrap';
 
 import { statuses } from '../constants';
 
 import Badge from './Badge';
 
 export default function TodoFilters({ filters, setFilters, tags }) {
+  const filterSearch = (query) =>
+    setFilters({
+      ...filters,
+      query,
+    });
+
   const filterStatus = (status) =>
     setFilters({
       ...filters,
@@ -43,7 +50,7 @@ export default function TodoFilters({ filters, setFilters, tags }) {
         Tags:{' '}
         <Badge
           className="mr-2"
-          color="light"
+          color={!filters.tag ? 'secondary' : 'light'}
           status={'All'}
           onClick={() => filterTags(undefined)}
         />
@@ -51,10 +58,21 @@ export default function TodoFilters({ filters, setFilters, tags }) {
           <Badge
             className="mr-2"
             status={value}
-            color={isSelected('tag', value) ? undefined : 'light'}
+            color={
+              filters.tag && isSelected('tag', value) ? 'primary' : 'light'
+            }
             onClick={() => filterTags(value)}
           />
         ))}
+      </div>
+      <div className="my-3">
+        <Input
+          id="search-bar"
+          onChange={(e) => filterSearch(e.target.value)}
+          value={filters?.query}
+          placeholder="Search tasks"
+          required
+        />
       </div>
     </div>
   );

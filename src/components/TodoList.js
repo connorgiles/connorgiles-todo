@@ -15,6 +15,7 @@ export default function TodoList({
   todos = [],
   removeTodo,
   editTodo,
+  toggleStatus,
 }) {
   const TodoListContent = () =>
     !todos || todos.length === 0 ? (
@@ -26,6 +27,7 @@ export default function TodoList({
           todo={todo}
           onEdit={() => editTodo(index)}
           onRemove={() => removeTodo(index)}
+          toggleStatus={() => toggleStatus(index)}
         />
       ))
     );

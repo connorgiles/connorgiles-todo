@@ -76,8 +76,10 @@ export default function TodoEdit({ saveTodo, todo, toggle, tags }) {
   const handleInputChange = (e) => updateTodo(e.target.name, e.target.value);
 
   return (
-    <Modal isOpen={!!todo} toggle={toggle}>
-      <ModalHeader toggle={toggle}>{state?.title || 'Edit Todo'}</ModalHeader>
+    <Modal centered isOpen={!!todo} toggle={toggle}>
+      <ModalHeader className="bg-primary text-white" toggle={toggle}>
+        {state?.title || 'Edit Todo'}
+      </ModalHeader>
       <ModalBody>
         <Form onSubmit={onSubmit}>
           <FormGroup>
