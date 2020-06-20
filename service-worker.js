@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/connorgiles-todo/precache-manifest.5cbadb472dd8b5cd013b29298d33d10f.js"
+  "/connorgiles-todo/precache-manifest.2697a07bb8eaca81d56c011e2a29de5e.js"
 );
 
 self.addEventListener('message', (event) => {
