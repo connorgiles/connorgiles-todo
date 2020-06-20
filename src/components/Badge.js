@@ -7,7 +7,7 @@ const MyBadge = styled(StrapBadge)`
 `;
 
 const colors = {
-  Pending: 'secondary',
+  Pending: 'dark',
   'In Progress': 'primary',
   Completed: 'success',
 };

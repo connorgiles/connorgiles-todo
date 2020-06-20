@@ -12,12 +12,14 @@ import {
   nextStatus,
 } from '../helpers';
 
+import TodoSearch from './TodoSearch';
 import TodoFilters from './TodoFilters';
 import TodoEdit from './TodoEdit';
 import TodoList from './TodoList';
 
 const Wrapper = styled(Container)`
   max-width: 600px;
+  margin-bottom: 200px;
 `;
 
 function App() {
@@ -63,8 +65,8 @@ function App() {
 
   return (
     <Wrapper>
-      <h1 className="text-center my-4">Todos</h1>
-      <TodoFilters filters={filters} setFilters={setFilters} tags={tags} />
+      <h1 className="text-center my-4">My Tasks</h1>
+      <TodoSearch filters={filters} setFilters={setFilters} />
       <TodoList
         todos={filterTodos(todos, filters)}
         createTodo={onSave}
@@ -78,6 +80,7 @@ function App() {
         toggle={() => setTodoToEdit(undefined)}
         tags={tags}
       />
+      <TodoFilters filters={filters} setFilters={setFilters} tags={tags} />
     </Wrapper>
   );
 }

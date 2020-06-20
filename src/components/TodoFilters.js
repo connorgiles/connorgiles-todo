@@ -1,17 +1,10 @@
 import React from 'react';
-import { Input } from 'reactstrap';
 
 import { statuses } from '../constants';
 
 import Badge from './Badge';
 
 export default function TodoFilters({ filters, setFilters, tags }) {
-  const filterSearch = (query) =>
-    setFilters({
-      ...filters,
-      query,
-    });
-
   const filterStatus = (status) =>
     setFilters({
       ...filters,
@@ -28,8 +21,10 @@ export default function TodoFilters({ filters, setFilters, tags }) {
   const isSelected = (type, val) => !filters[type] || filters[type] === val;
 
   return (
-    <div>
-      <div className="my-3">
+    <div
+      className="py-3 fixed-bottom bg-secondary text-white"
+      style={{ backgroundColor: '#dae4ed' }}>
+      <div className="my-3 text-center">
         Status:{' '}
         <Badge
           className="mr-2"
@@ -46,11 +41,11 @@ export default function TodoFilters({ filters, setFilters, tags }) {
           />
         ))}
       </div>
-      <div className="my-3">
+      <div className="my-3 text-center">
         Tags:{' '}
         <Badge
           className="mr-2"
-          color={!filters.tag ? 'secondary' : 'light'}
+          color={!filters.tag ? 'dark' : 'light'}
           status={'All'}
           onClick={() => filterTags(undefined)}
         />
@@ -58,21 +53,10 @@ export default function TodoFilters({ filters, setFilters, tags }) {
           <Badge
             className="mr-2"
             status={value}
-            color={
-              filters.tag && isSelected('tag', value) ? 'primary' : 'light'
-            }
+            color={filters.tag && isSelected('tag', value) ? 'dark' : 'light'}
             onClick={() => filterTags(value)}
           />
         ))}
-      </div>
-      <div className="my-3">
-        <Input
-          id="search-bar"
-          onChange={(e) => filterSearch(e.target.value)}
-          value={filters?.query}
-          placeholder="Search tasks"
-          required
-        />
       </div>
     </div>
   );
