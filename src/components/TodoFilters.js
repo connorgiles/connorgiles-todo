@@ -84,24 +84,28 @@ export default function TodoFilters({ filters, setFilters, tags }) {
             onClick={() => filterStatus('Not Completed')}
           />
         </div>
-        <div className="my-3 text-center">
-          Tags:{' '}
-          <Badge
-            className="mr-2"
-            color={!filters.tag ? 'dark' : 'light'}
-            status={'All'}
-            onClick={() => filterTags(undefined)}
-          />
-          {tags.map(({ value }) => (
+        {tags && tags.length > 0 && (
+          <div className="my-3 text-center">
+            Tags:{' '}
             <Badge
-              key={value}
               className="mr-2"
-              status={value}
-              color={filters.tag && isSelected('tag', value) ? 'dark' : 'light'}
-              onClick={() => filterTags(value)}
+              color={!filters.tag ? 'dark' : 'light'}
+              status={'All'}
+              onClick={() => filterTags(undefined)}
             />
-          ))}
-        </div>
+            {tags.map(({ value }) => (
+              <Badge
+                key={value}
+                className="mr-2"
+                status={value}
+                color={
+                  filters.tag && isSelected('tag', value) ? 'dark' : 'light'
+                }
+                onClick={() => filterTags(value)}
+              />
+            ))}
+          </div>
+        )}
       </Collapse>
     </div>
   );

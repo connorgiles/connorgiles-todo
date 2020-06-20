@@ -26,7 +26,9 @@ function App() {
   // State values
   const [rawTodos, setTodos] = useLocalStorage('cg-todos', []);
   const [todoToEdit, setTodoToEdit] = useState();
-  const [filters, setFilters] = useLocalStorage('cg-filtes', {});
+  const [filters, setFilters] = useLocalStorage('cg-filtes', {
+    status: 'Not Completed',
+  });
 
   // Parse todos and tags from state
   const todos = normalizeTodos(rawTodos);
