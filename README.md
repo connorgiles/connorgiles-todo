@@ -2,6 +2,20 @@
 
 Created by Connor Giles as a coding challenge
 
+## Get Started
+
+To get started please follow the commands below to download and install the dependancies.
+
+```
+git clone https://github.com/connorgiles/connorgiles-todo.git
+cd connorgiles-todo
+yarn install
+```
+
+When you would like to run the application simply run `yarn start`.
+
+To build the application for production simply run `yarn build`.
+
 ## Features
 
 - [x] Required functionality
