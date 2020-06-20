@@ -48,5 +48,17 @@ describe('Helpers', () => {
         include: false,
       });
     });
+
+    test('filters based on completed status', () => {
+      const filtered = filterTodos(testTodos, { status: 'Completed' });
+      expect(filtered[0]).toStrictEqual({
+        ...testTodos[0],
+        include: false,
+      });
+      expect(filtered[1]).toStrictEqual({
+        ...testTodos[1],
+        include: true,
+      });
+    });
   });
 });
